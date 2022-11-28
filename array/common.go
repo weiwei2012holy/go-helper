@@ -61,7 +61,7 @@ func Shuffle[V any](s *[]V) {
     if len(*s) <= 1 {
         return
     }
-    rand.Seed(time.Now().Unix())
+    rand.Seed(time.Now().UnixNano())
     rand.Shuffle(len(*s), func(i, j int) {
         (*s)[i], (*s)[j] = (*s)[j], (*s)[i]
     })

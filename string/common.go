@@ -67,3 +67,23 @@ func Trim(src string, characters ...string) string {
     }
     return src
 }
+
+//Contains 验证字符串包含部分子字符串
+func Contains(src string, needles ...string) bool {
+    for i := 0; i < len(needles); i++ {
+        if strings.Contains(src, needles[i]) {
+            return true
+        }
+    }
+    return false
+}
+
+//ContainsAll 验证字符串包含全部子字符串
+func ContainsAll(src string, needles ...string) bool {
+    for i := 0; i < len(needles); i++ {
+        if !strings.Contains(src, needles[i]) {
+            return false
+        }
+    }
+    return true
+}

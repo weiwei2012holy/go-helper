@@ -109,3 +109,72 @@ func TestImplode(t *testing.T) {
         })
     }
 }
+
+func TestContains(t *testing.T) {
+    type args struct {
+        src     string
+        needles []string
+    }
+    tests := []struct {
+        name string
+        args args
+        want bool
+    }{
+
+        {
+            name: "c1",
+            args: args{
+                src:     "abcdefg",
+                needles: []string{"a", "c", "e"},
+            },
+            want: true,
+        },
+        {
+            name: "c1",
+            args: args{
+                src:     "abcdefg",
+                needles: []string{"aaa"},
+            },
+            want: false,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, Contains(tt.args.src, tt.args.needles...), "Contains(%v, %v)", tt.args.src, tt.args.needles)
+        })
+    }
+}
+
+func TestContainsAll(t *testing.T) {
+    type args struct {
+        src     string
+        needles []string
+    }
+    tests := []struct {
+        name string
+        args args
+        want bool
+    }{
+        {
+            name: "c1",
+            args: args{
+                src:     "abcdefg",
+                needles: []string{"a", "b", "c"},
+            },
+            want: true,
+        },
+        {
+            name: "c1",
+            args: args{
+                src:     "abcdefg",
+                needles: []string{"a", "a1", "c"},
+            },
+            want: false,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, ContainsAll(tt.args.src, tt.args.needles...), "ContainsAll(%v, %v)", tt.args.src, tt.args.needles)
+        })
+    }
+}
