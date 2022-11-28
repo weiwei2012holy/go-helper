@@ -144,8 +144,13 @@ func MbStrlen(src string) int {
     return len([]rune(src))
 }
 
-func substr(src string, offset, length int) string {
-    return src[offset : offset+length]
+// Substr  substr
+func Substr(src string, offset, length int) string {
+    end := offset + length
+    if end >= len(src) {
+        return src[offset:]
+    }
+    return src[offset:end]
 }
 
 // Before 截取第一个子串 N 前的字符串

@@ -569,3 +569,23 @@ func TestAfterLast(t *testing.T) {
         })
     }
 }
+
+func TestSubstr(t *testing.T) {
+    s := "abc"
+    for i := 0; i <= 4; i++ {
+        r := Substr(s, 1, i)
+        t.Log(r)
+    }
+}
+
+func TestStrlen(t *testing.T) {
+    s1 := "abc"
+    s2 := "你好"
+    s3 := "你好abc"
+    assert.Equal(t, 3, Strlen(s1))
+    assert.Equal(t, 3, MbStrlen(s1))
+    assert.NotEqual(t, 2, Strlen(s2))
+    assert.Equal(t, 2, MbStrlen(s2))
+    assert.NotEqual(t, 5, Strlen(s3))
+    assert.Equal(t, 5, MbStrlen(s3))
+}
