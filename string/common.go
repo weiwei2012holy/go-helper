@@ -107,3 +107,91 @@ func StartsWith(src string, needles ...string) bool {
     }
     return false
 }
+
+// Strpos strpos
+func Strpos(src, needle string) int {
+    return strings.Index(src, needle)
+}
+
+// MbStrpos 查找字符串在另一个字符串中首次出现的位置
+func MbStrpos(src, needle string) int {
+    idx := strings.Index(src, needle)
+    if idx <= 0 {
+        return idx
+    }
+    reader := strings.NewReader(src)
+    newIdx := 0
+    for {
+        _, size, err := reader.ReadRune()
+        if err != nil {
+            return -1
+        }
+        idx -= size
+        newIdx++
+        if idx <= 0 {
+            return newIdx
+        }
+    }
+}
+
+// Strlen  strlen 获取字符串长度
+func Strlen(src string) int {
+    return len(src)
+}
+
+// MbStrlen mb_strlen 获取字符串长度
+func MbStrlen(src string) int {
+    return len([]rune(src))
+}
+
+func substr(src string, offset, length int) string {
+    return src[offset : offset+length]
+}
+
+// Before 截取第一个子串 N 前的字符串
+func Before(src, needle string) string {
+    if needle == "" {
+        return src
+    }
+    idx := strings.Index(src, needle)
+    if idx <= 0 {
+        return ""
+    }
+    return src[:idx]
+}
+
+// BeforeLast 截取最后一个子串 N 前的字符串
+func BeforeLast(src, needle string) string {
+    if needle == "" {
+        return src
+    }
+    idx := strings.LastIndex(src, needle)
+    if idx <= 0 {
+        return ""
+    }
+    return src[:idx]
+}
+
+// After 截取第一个子串 N 后的字符串
+func After(src, needle string) string {
+    if needle == "" {
+        return src
+    }
+    idx := strings.Index(src, needle)
+    if idx == -1 {
+        return ""
+    }
+    return src[idx+len(needle):]
+}
+
+// AfterLast  截取最后一个子串 N 后的字符串
+func AfterLast(src, needle string) string {
+    if needle == "" {
+        return src
+    }
+    idx := strings.LastIndex(src, needle)
+    if idx == -1 {
+        return ""
+    }
+    return src[idx+len(needle):]
+}

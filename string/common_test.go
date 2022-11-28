@@ -1,6 +1,7 @@
 package string
 
 import (
+    "strings"
     "testing"
     "time"
 
@@ -205,6 +206,14 @@ func TestEndsWith(t *testing.T) {
             },
             want: false,
         },
+        {
+            name: "a2",
+            args: args{
+                src:     "abcde你好",
+                needles: []string{"你好", "好"},
+            },
+            want: true,
+        },
     }
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
@@ -240,10 +249,323 @@ func TestStartsWith(t *testing.T) {
             },
             want: false,
         },
+        {
+            name: "a3",
+            args: args{
+                src:     "你好世界",
+                needles: []string{"你好"},
+            },
+            want: true,
+        },
     }
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
             assert.Equalf(t, tt.want, StartsWith(tt.args.src, tt.args.needles...), "StartsWith(%v, %v)", tt.args.src, tt.args.needles)
+        })
+    }
+}
+
+func TestStrpos(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want int
+    }{
+        {
+            name: "s1",
+            args: args{
+                src:    "abcde",
+                needle: "a",
+            },
+            want: 0,
+        },
+        {
+            name: "s2",
+            args: args{
+                src:    "abcde",
+                needle: "abc",
+            },
+            want: 0,
+        },
+        {
+            name: "s3",
+            args: args{
+                src:    "abcde",
+                needle: "aaa",
+            },
+            want: -1,
+        },
+        {
+            name: "s4",
+            args: args{
+                src:    "abababab",
+                needle: "a",
+            },
+            want: 0,
+        },
+        {
+            name: "5",
+            args: args{
+                src:    "你好世界",
+                needle: "好",
+            },
+            want: 1,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, Strpos(tt.args.src, tt.args.needle), "Strpos(%v, %v)", tt.args.src, tt.args.needle)
+        })
+    }
+}
+func TestStringSplit(t *testing.T) {
+    s := "a,b,c,d,e,f"
+    r1 := strings.Split(s, ",") //字符串分割
+    t.Log(r1, len(r1))          //[a b c d e f] 6
+
+    r2 := strings.SplitN(s, ",", 2) //字符串分割-只分割 N 个
+    t.Log(r2, len(r2))              //[a b,c,d,e,f] 2
+
+    r3 := strings.SplitAfter(s, ",") //字符串分割-返回的数据包含子串
+    t.Log(r3, len(r3))               //[a, b, c, d, e, f] 6
+
+    r4 := strings.SplitAfterN(s, ",", 2)
+    t.Log(r4, len(r4)) //[a, b,c,d,e,f] 2
+}
+
+func TestMbStrpos(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want int
+    }{
+        {
+            name: "s1",
+            args: args{
+                src:    "a1你好世界",
+                needle: "好",
+            },
+            want: 3,
+        },
+        {
+            name: "s2",
+            args: args{
+                src:    "a1你好世界",
+                needle: "a1",
+            },
+            want: 0,
+        },
+        {
+            name: "s3",
+            args: args{
+                src:    "你好世界",
+                needle: "世界",
+            },
+            want: 2,
+        },
+        {
+            name: "s3",
+            args: args{
+                src:    "你好世界",
+                needle: "a",
+            },
+            want: -1,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, MbStrpos(tt.args.src, tt.args.needle), "MbStrpos(%v, %v)", tt.args.src, tt.args.needle)
+        })
+    }
+}
+
+func TestMbStrlen(t *testing.T) {
+    type args struct {
+        src string
+    }
+    tests := []struct {
+        name string
+        args args
+        want int
+    }{
+        {
+            name: "a1",
+            args: args{
+                src: "你好世界",
+            },
+            want: 4,
+        },
+        {
+            name: "a1",
+            args: args{
+                src: "a1你好世界",
+            },
+            want: 6,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, MbStrlen(tt.args.src), "MbStrlen(%v)", tt.args.src)
+        })
+    }
+}
+
+func TestBefore(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want string
+    }{
+        {
+            name: "b1",
+            args: args{
+                src:    "abcde",
+                needle: "c",
+            },
+            want: "ab",
+        },
+        {
+            name: "b2",
+            args: args{
+                src:    "abc你好世界",
+                needle: "好",
+            },
+            want: "abc你",
+        },
+        {
+            name: "b2",
+            args: args{
+                src:    "你好世界",
+                needle: "你",
+            },
+            want: "",
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, Before(tt.args.src, tt.args.needle), "Before(%v, %v)", tt.args.src, tt.args.needle)
+        })
+    }
+}
+
+func TestAfter(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want string
+    }{
+        {
+            name: "b1",
+            args: args{
+                src:    "abcde",
+                needle: "c",
+            },
+            want: "de",
+        },
+        {
+            name: "b2",
+            args: args{
+                src:    "abc你好世界",
+                needle: "好",
+            },
+            want: "世界",
+        },
+        {
+            name: "b3",
+            args: args{
+                src:    "你好世界",
+                needle: "界",
+            },
+            want: "",
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, After(tt.args.src, tt.args.needle), "After(%v, %v)", tt.args.src, tt.args.needle)
+        })
+    }
+}
+
+func TestBeforeLast(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want string
+    }{
+        {
+            name: "b1",
+            args: args{
+                src:    "abcabc",
+                needle: "b",
+            },
+            want: "abca",
+        },
+        {
+            name: "b2",
+            args: args{
+                src:    "你好世界你好世界",
+                needle: "世界",
+            },
+            want: "你好世界你好",
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, BeforeLast(tt.args.src, tt.args.needle), "BeforeLast(%v, %v)", tt.args.src, tt.args.needle)
+        })
+    }
+}
+
+func TestAfterLast(t *testing.T) {
+    type args struct {
+        src    string
+        needle string
+    }
+    tests := []struct {
+        name string
+        args args
+        want string
+    }{
+        {
+            name: "b1",
+            args: args{
+                src:    "abcabc",
+                needle: "b",
+            },
+            want: "c",
+        },
+        {
+            name: "b2",
+            args: args{
+                src:    "你好世界你好世界",
+                needle: "你好",
+            },
+            want: "世界",
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, AfterLast(tt.args.src, tt.args.needle), "AfterLast(%v, %v)", tt.args.src, tt.args.needle)
         })
     }
 }
