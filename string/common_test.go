@@ -178,3 +178,72 @@ func TestContainsAll(t *testing.T) {
         })
     }
 }
+
+func TestEndsWith(t *testing.T) {
+    type args struct {
+        src     string
+        needles []string
+    }
+    tests := []struct {
+        name string
+        args args
+        want bool
+    }{
+        {
+            name: "a1",
+            args: args{
+                src:     "abcde",
+                needles: []string{"a", "e"},
+            },
+            want: true,
+        },
+        {
+            name: "a2",
+            args: args{
+                src:     "abcde",
+                needles: []string{"a", "e1"},
+            },
+            want: false,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, EndsWith(tt.args.src, tt.args.needles...), "EndsWith(%v, %v)", tt.args.src, tt.args.needles)
+        })
+    }
+}
+
+func TestStartsWith(t *testing.T) {
+    type args struct {
+        src     string
+        needles []string
+    }
+    tests := []struct {
+        name string
+        args args
+        want bool
+    }{
+
+        {
+            name: "a1",
+            args: args{
+                src:     "abcde",
+                needles: []string{"a", "b"},
+            },
+            want: true,
+        },
+        {
+            name: "a2",
+            args: args{
+                src:     "abcde",
+                needles: []string{"b1", "b"},
+            },
+            want: false,
+        },
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            assert.Equalf(t, tt.want, StartsWith(tt.args.src, tt.args.needles...), "StartsWith(%v, %v)", tt.args.src, tt.args.needles)
+        })
+    }
+}

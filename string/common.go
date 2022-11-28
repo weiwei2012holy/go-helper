@@ -87,3 +87,23 @@ func ContainsAll(src string, needles ...string) bool {
     }
     return true
 }
+
+//EndsWith 验证字符串包含特定字符结尾
+func EndsWith(src string, needles ...string) bool {
+    for i := 0; i < len(needles); i++ {
+        if needles[i] == "" || strings.HasSuffix(src, needles[i]) {
+            return true
+        }
+    }
+    return false
+}
+
+// StartsWith 验证字符串包含特定字符开始
+func StartsWith(src string, needles ...string) bool {
+    for i := 0; i < len(needles); i++ {
+        if needles[i] == "" || strings.HasPrefix(src, needles[i]) {
+            return true
+        }
+    }
+    return false
+}
