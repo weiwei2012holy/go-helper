@@ -113,7 +113,8 @@ func Strpos(src, needle string) int {
     return strings.Index(src, needle)
 }
 
-// MbStrpos 查找字符串在另一个字符串中首次出现的位置
+// MbStrpos
+//】】、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、······找字符串在另一个字符串中首次出现的位置
 func MbStrpos(src, needle string) int {
     idx := strings.Index(src, needle)
     if idx <= 0 {
@@ -177,7 +178,7 @@ func BeforeLast(src, needle string) string {
     return src[:idx]
 }
 
-// After 截取第一个子串 N 后的字符串
+// After 第一个子串 N 后的字符串
 func After(src, needle string) string {
     if needle == "" {
         return src
