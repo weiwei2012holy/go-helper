@@ -2,7 +2,7 @@ package array
 
 import (
     "errors"
-    "go-helper/lib"
+    "github.com/weiwei2012holy/go-helper/lib"
     "math"
     "math/rand"
     "time"

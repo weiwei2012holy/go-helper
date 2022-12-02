@@ -1,4 +1,4 @@
-module go-helper
+module github.com/weiwei2012holy/go-helper
 
 go 1.18
 

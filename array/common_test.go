@@ -4,7 +4,7 @@ import (
     "fmt"
     "github.com/shopspring/decimal"
     "github.com/stretchr/testify/assert"
-    string2 "go-helper/string"
+    string2 "github.com/weiwei2012holy/go-helper/string"
     "math"
     "math/rand"
     "testing"
